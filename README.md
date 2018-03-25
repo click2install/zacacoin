@@ -7,7 +7,7 @@ Shell script to install a [ZacaCoin Masternode](https://bitcointalk.org/index.ph
 
 ## Installation
 ```
-wget -q https://github.com/click2install/zacacoin/master/install-zaca.sh  
+wget -q https://raw.githubusercontent.com/click2install/zacacoin/master/install-zaca.sh  
 chmod +x install-zaca.sh
 bash install-zaca.sh
 ```
@@ -32,10 +32,23 @@ The script allows for a custom SSH port to be specified as well as setting up th
 
 The [fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) package is also used to mitigate DDoS attempts on your server.
 
+Despite this script needing to run as `root` you should secure your Ubuntu server as normal with the following precautions:
+
+ - disable password authentication
+ - disable root login
+ - enable SSH certificate login only
+
+If the above precautions are taken you will need to `su root` before running the script.
+
 &nbsp;
 
 ## Disclaimer
 Whilst effort has been put into maintaining and testing this script, it will automatically modify settings on your Ubuntu server - use at your own risk. By downloading this script you are accepting all responsibility for any actions it performs on your server.
+
+&nbsp;
+
+
+
 
 
 
