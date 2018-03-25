@@ -11,6 +11,15 @@ wget -q https://raw.githubusercontent.com/click2install/zacacoin/master/install-
 chmod +x install-zaca.sh
 bash install-zaca.sh
 ```
+This script is intended to be used on a clean server, or a server that has used this script to install previous nodes as it has expectations about where files are located. If you use this script after installing a node using another method, you will most likely end up having problems with your nodes, they may not start/stop correctly or receive rewards.
+
+There is a [manual installation](https://medium.com/@click2install.moore/definitive-guide-to-setting-up-a-zacacoin-masternode-319d7c99d419) guide that you can use if you have already installed nodes on your server that have not used this script.
+
+Donations for the creation and maintenance of this script are welcome at:
+&nbsp;
+
+ZACA: ZtugezqGy4mVZpTU4tPBjKY4t7YwDyuDA2
+
 &nbsp;
 
 
