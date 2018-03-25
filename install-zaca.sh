@@ -355,7 +355,7 @@ fi
 checks
 
 if [[ ("$NEW_NODE" == "y" || "$NEW_NODE" == "Y") ]]; then
-  setup_7node
+  setup_node
   exit 0
 elif [[ "$NEW_NODE" == "new" ]]; then
   prepare_system
