@@ -32,5 +32,10 @@ The script allows for a custom SSH port to be specified as well as setting up th
 
 The [fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) package is also used to mitigate DDoS attempts on your server.
 
+&nbsp;
+
+## Disclaimer
+Whilst effort has been put into maintaining and testing this script, it will automatically modify settings on your Ubuntu server - use at your own risk. By downloading this script you are accepting all responsibility for any actions it performs on your server.
+
 
 
