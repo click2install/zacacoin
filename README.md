@@ -2,8 +2,6 @@
 
 Shell script to install a [ZacaCoin Masternode](https://bitcointalk.org/index.php?topic=2988037.0) on a Linux server running Ubuntu 16.04.
 
-&nbsp;
-
 
 ## Installation
 ```
@@ -23,7 +21,7 @@ ZACA: ZtugezqGy4mVZpTU4tPBjKY4t7YwDyuDA2
 &nbsp;
 
 
-## Multiple Master Nodes on one server
+## Multiple master nodes on one server
 The script allows for multiple nodes to be setup. During the execution of the script you have the opportunity to decide on a port and rpc port to use for the node. Each node runs under are different user account which the script creates for you.
 
 &nbsp;
