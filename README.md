@@ -26,7 +26,7 @@ The script allows for multiple nodes to be setup on the same server, using the s
 
 During the execution of the script you have the opportunity to decide on a port and rpc port to use for the node. Each node runs under are different user account which the script creates for you.
 
-At this stage the script auto detects the IP address of the server and uses it, without asking for user interaction. If you have multiple IP addresses you may want to adjust the configuration file that is generated after the script is finished. It resides in `/home/[username]/.zaca/zaca.conf.
+At this stage the script auto detects the IP address of the server and uses it, without asking for user interaction. If you have multiple IP addresses you may want to adjust the configuration file that is generated after the script is finished. It resides in `/home/[username]/.zaca/zaca.conf`.
 
 &nbsp;
 
