@@ -69,8 +69,7 @@ function prepare_system()
     bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban htop unzip pwgen
   clear
   
-  if [ "$?" -gt "0" ];
-    then
+  if [ "$?" -gt "0" ]; then
       echo -e "${RED}Not all of the required packages were installed correctly.\n"
       echo -e "Try to install them manually by running the following commands:${NC}\n"
       echo -e "apt update"
@@ -299,8 +298,9 @@ function show_output()
  echo -e " - auto start when your VPS is rebooted."
  echo -e " - clear the ${GREEN}$ZACALOGFILE${NC} log file every 2nd day."
  echo
+ echo -e "You can run ${GREEN} htop if you want to verify the zaca service is running or to monitor your server"
+ echo 
  echo -e "================================================================================================================================"
- echo
  echo
 }
 
@@ -344,6 +344,11 @@ echo
 echo -e "The script will output ${YELLOW}questions${NC}, ${GREEN}information${NC} and ${RED}errors${NC}"
 echo -e "When finished the script will show a summary of what has been done."
 echo
+echo -e "Script created by click2install"
+echo -e " - GitHub: https://github.com/click2install"
+echo -e " - Discord: click2install#9625"
+echo -e " - ZACA: ZtugezqGy4mVZpTU4tPBjKY4t7YwDyuDA2"
+echo 
 echo -e "============================================================================================================="
 echo
 read -e -p "$(echo -e $YELLOW Do you want to continue? [Y/N] $NC)" CHOICE
