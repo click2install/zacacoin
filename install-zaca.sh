@@ -298,7 +298,7 @@ function show_output()
  echo -e " - auto start when your VPS is rebooted."
  echo -e " - clear the ${GREEN}$ZACALOGFILE${NC} log file every 2nd day."
  echo
- echo -e "You can run ${GREEN} htop if you want to verify the zaca service is running or to monitor your server"
+ echo -e "You can run ${GREEN}htop${NC} if you want to verify the zaca service is running or to monitor your server."
  echo 
  echo -e "================================================================================================================================"
  echo
