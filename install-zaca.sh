@@ -268,7 +268,7 @@ function add_log_truncate()
 {
   ZACALOGFILE="$ZACAFOLDER/debug.log";
 
-  mkdir ~/.zaca
+  mkdir ~/.zaca >/dev/null 2>&1
   cat << EOF >> ~/.zaca/clearlog-$ZACAUSER.sh
 /bin/date > $ZACALOGFILE
 EOF
@@ -292,8 +292,8 @@ function show_output()
  echo -e " - the masternode privkey is ${GREEN}$ZACAPRIVKEY${NC}"
  echo
  echo -e "You can manage your ZACA service from the cmdline with the following commands:"
- echo -e " - ${GREEN}systemctl start $ZACAUSER.service${NC} to start the service for the logged in user."
- echo -e " - ${GREEN}systemctl stop $ZACAUSER.service${NC} to stop the service for the logged in user."
+ echo -e " - ${GREEN}systemctl start $ZACAUSER.service${NC} to start the service for the given user."
+ echo -e " - ${GREEN}systemctl stop $ZACAUSER.service${NC} to stop the service for the given user."
  echo
  echo -e "The installed service is set to:"
  echo -e " - auto start when your VPS is rebooted."
@@ -329,7 +329,7 @@ echo -e "                                       dP    dPwwYb  8b     dPwwYb"
 echo -e "                                      d8888 dP    Yb \`Y88P dP    Yb" 
 echo                          
 echo -e "${NC}"
-echo -e "This script will automate the installation of your ZACA coin masternode and server configuration by."
+echo -e "This script will automate the installation of your ZACA coin masternode and server configuration by"
 echo -e "performing the following steps:"
 echo
 echo -e " - Prepare your system with the required dependencies"
