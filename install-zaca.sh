@@ -2,10 +2,11 @@
 
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE="zaca.conf"
-BINARY_FILE="/usr/local/bin/zaca"
 DEFAULTUSER="zaca-mn1"
 DEFAULTPORT=48882
 DEFAULTSSHPORT=22
+BINARY_FILE="/usr/local/bin/zacad"
+ZACA_DAEMON_ZIP="https://github.com/zacacoin/zacacoin/raw/2.0.0.1/src/zacad.zip"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -54,19 +55,19 @@ function prepare_system()
   fi
   
   echo -e "${GREEN}Updating package manager${NC}."
-  apt update >/dev/null 2>&1
+  apt update
   
   echo -e "${GREEN}Upgrading existing packages, it may take some time to finish.${NC}"
-  DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 
+  DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade 
   
   echo -e "${GREEN}Installing all dependencies for the ZACA coin master node, it may take some time to finish.${NC}"
-  apt install -y software-properties-common >/dev/null 2>&1
-  apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
-  apt update >/dev/null 2>&1
+  apt install -y software-properties-common
+  apt-add-repository -y ppa:bitcoin/bitcoin
+  apt update
   apt install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
     make software-properties-common build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-    libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev \
-    bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban htop unzip pwgen
+    libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl \
+    bsdmainutils libdb5.3-dev libdb5.3++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban htop unzip
   clear
   
   if [ "$?" -gt "0" ]; then
@@ -76,9 +77,9 @@ function prepare_system()
       echo -e "apt -y install software-properties-common"
       echo -e "apt-add-repository -y ppa:bitcoin/bitcoin"
       echo -e "apt update"
-      echo -e "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
-  libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git pwgen curl libdb4.8-dev \
-  bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban unzip htop"
+      echo -e "apt install -y make software-properties-common build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
+    libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl \
+    bsdmainutils libdb5.3-dev libdb5.3++-dev libminiupnpc-dev libgmp3-dev ufw fail2ban htop unzip"
    exit 1
   fi
 
@@ -87,18 +88,17 @@ function prepare_system()
 
 function deploy_binary() 
 {
-  if [ -f /usr/local/bin/zaca ]; then
-    echo -e "${GREEN}Zaca daemon binary file already exists, using binary from /usr/local/bin/zaca.${NC}"
+  if [ -f $BINARY_FILE ]; then
+    echo -e "${GREEN}Zaca daemon binary file already exists, using binary from $BINARY_FILE.${NC}"
   else
     cd $TMP_FOLDER
-    echo -e "${GREEN}Downloading and deploying the zaca daemon binary file.${NC}"
-    wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1m5xgBSWVD8eiL5W9xh_HGVBMpujT7b0n' -O zaca.zip >/dev/null 2>&1
 
-    # todo: change this to official binary from Zaca GitHub once it is available
+    echo -e "${GREEN}Downloading $ZACA_DAEMON_ZIP and deploying the zaca service.${NC}"
+    wget $ZACA_DAEMON_ZIP -O zaca.zip >/dev/null 2>&1
 
     unzip zaca.zip -d . >/dev/null 2>&1
-    cp zaca /usr/local/bin/ >/dev/null 2>&1
-    chmod +x /usr/local/bin/zaca >/dev/null 2>&1
+    cp zacad /usr/local/bin/ >/dev/null 2>&1
+    chmod +x $BINARY_FILE >/dev/null 2>&1
 
     cd
   fi
@@ -197,6 +197,7 @@ function ask_user()
 function check_port() 
 {
   declare -a PORTS
+
   PORTS=($(netstat -tnlp | awk '/LISTEN/ {print $4}' | awk -F":" '{print $NF}' | sort | uniq | tr '\r\n'  ' '))
   ask_port
 
@@ -217,6 +218,8 @@ function ask_ssh_port()
 
 function create_config() 
 {
+  echo -e "${GREEN}Creating the zaca configuration file at $ZACAFOLDER/$CONFIG_FILE.${NC}"
+
   RPCUSER=$(pwgen -s 8 1)
   RPCPASSWORD=$(pwgen -s 15 1)
   cat << EOF > $ZACAFOLDER/$CONFIG_FILE
@@ -241,7 +244,7 @@ function create_key()
     sleep 5
 
     if [ -z "$(pidof zaca)" ]; then
-    echo -e "${RED}zaca deamon couldn't start, could not generate a private key. Check /var/log/syslog for errors.{$NC}"
+    echo -e "${RED}zaca deamon couldn't start, could not generate a private key. Check /var/log/syslog for errors.${NC}"
     exit 1
     fi
 
