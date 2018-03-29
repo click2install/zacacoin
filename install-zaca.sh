@@ -316,7 +316,7 @@ function show_output()
  echo -e "================================================================================================================================"
  echo
  echo -e "Your ZACA coin master node is up and running." 
- echo -e " - it is running as user ${GREEN}$ZACAUSER${NC} and it is listening on port ${GREEN}$DAEMONPORT${NC} at your VPS address ${GREEN}$NODEIP."
+ echo -e " - it is running as user ${GREEN}$ZACAUSER${NC} and it is listening on port ${GREEN}$DAEMONPORT${NC} at your VPS address ${GREEN}$NODEIP${NC}."
  echo -e " - the ${GREEN}$ZACAUSER${NC} password is ${GREEN}$USERPASS${NC}"
  echo -e " - the ZACA configuration file is located at ${GREEN}$ZACAFOLDER/$CONFIG_FILE${NC}"
  echo -e " - the masternode privkey is ${GREEN}$ZACAPRIVKEY${NC}"
