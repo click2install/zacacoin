@@ -330,7 +330,7 @@ function show_output()
  echo -e " - clear the ${GREEN}$ZACALOGFILE${NC} log file every 2nd day."
  echo
  echo -e "You can run ${GREEN}htop${NC} if you want to verify the zaca service is running or to monitor your server."
- if [$SSH_PORTNUMBER != $DEFAULTSSHPORT]; then
+ if [[ $SSH_PORTNUMBER -ne $DEFAULTSSHPORT ]]; then
  echo
  echo -e " ATTENTION: you have changed your SSH port, make sure you modify your SSH client to use port $SSH_PORTNUMBER so you can login."
  fi
