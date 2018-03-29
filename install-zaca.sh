@@ -5,8 +5,10 @@ CONFIG_FILE="zaca.conf"
 DEFAULTUSER="zaca-mn1"
 DEFAULTPORT=48882
 DEFAULTSSHPORT=22
-BINARY_FILE="/usr/local/bin/zacad"
+BINARY_NAME="zacad"
+BINARY_FILE="/usr/local/bin/$BINARY_NAME"
 ZACA_DAEMON_ZIP="https://github.com/zacacoin/zacacoin/raw/2.0.0.1/src/zacad.zip"
+GITHUB_REPO="https://github.com/zacacoin/zacacoin"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -25,7 +27,7 @@ function checks()
      exit 1
   fi
 
-  if [ -n "$(pidof zaca)" ]; then
+  if [ -n "$(pidof $BINARY_NAME)" ]; then
     read -e -p "$(echo -e The ZACA daemon is already running.$YELLOW Do you want to add another master node? [Y/N] $NC)" NEW_NODE
     clear
   else
@@ -97,11 +99,39 @@ function deploy_binary()
     wget $ZACA_DAEMON_ZIP -O zaca.zip >/dev/null 2>&1
 
     unzip zaca.zip -d . >/dev/null 2>&1
-    cp zacad /usr/local/bin/ >/dev/null 2>&1
+    cp $BINARY_NAME /usr/local/bin/ >/dev/null 2>&1
     chmod +x $BINARY_FILE >/dev/null 2>&1
 
     cd
   fi
+}
+
+function check_compile_error()
+{
+  if [ "$?" -ne 0 ]; then
+    echo -e "${RED}Failed to compile zaca service.${NC}"
+    exit 1
+  fi
+}
+
+function compile_binary()
+{
+  echo -e "${GREEN}Downloading zaca source code from $GITHUB_REPO.${NC}"
+
+  git clone $GITHUB_REPO $TMP_FOLDER
+  cd $TMP_FOLDER/src
+
+  echo -e "${GREEN}Compiling the zaca source code, this will take about 10 minutes to finish.${NC}"
+  make -f makefile.unix
+
+  check_compile_error
+
+  cp $BINARY_NAME /usr/local/bin/ >/dev/null 2>&1
+  chmod +x $BINARY_FILE >/dev/null 2>&1
+
+  clear
+  cd
+  echo -e "${GREEN}Zaca compilation finished.${NC}"
 }
 
 function enable_firewall() 
@@ -159,7 +189,7 @@ EOF
   echo -e "${GREEN}Enabling the service to start on reboot.${NC}"
   systemctl enable $ZACAUSER.service >/dev/null 2>&1
 
-  if [[ -z $(pidof zaca) ]]; then
+  if [[ -z $(pidof $BINARY_NAME) ]]; then
     echo -e "${RED}The zaca masternode service is not running${NC}. You should start by running the following commands as root:"
     echo "systemctl start $ZACAUSER.service"
     echo "systemctl status $ZACAUSER.service"
@@ -218,8 +248,6 @@ function ask_ssh_port()
 
 function create_config() 
 {
-  echo -e "${GREEN}Creating the zaca configuration file at $ZACAFOLDER/$CONFIG_FILE.${NC}"
-
   RPCUSER=$(pwgen -s 8 1)
   RPCPASSWORD=$(pwgen -s 15 1)
   cat << EOF > $ZACAFOLDER/$CONFIG_FILE
@@ -240,16 +268,16 @@ function create_key()
   read -e -p "$(echo -e $YELLOW Enter your master nodes private key. Leave it blank to generate a new private key.$NC)" ZACAPRIVKEY
 
   if [[ -z "$ZACAPRIVKEY" ]]; then
-    sudo -u $ZACAUSER /usr/local/bin/zaca -datadir=$ZACAFOLDER >/dev/null 2>&1
+    sudo -u $ZACAUSER $BINARY_FILE -daemon -datadir=$ZACAFOLDER >/dev/null 2>&1
     sleep 5
 
-    if [ -z "$(pidof zaca)" ]; then
+    if [ -z "$(pidof $BINARY_NAME)" ]; then
     echo -e "${RED}zaca deamon couldn't start, could not generate a private key. Check /var/log/syslog for errors.${NC}"
     exit 1
     fi
 
     ZACAPRIVKEY=$(sudo -u $ZACAUSER $BINARY_FILE -datadir=$ZACAFOLDER masternode genkey) 
-    sudo -u $ZACAUSER $BINARY_FILE  -datadir=$ZACAFOLDER stop >/dev/null 2>&1
+    sudo -u $ZACAUSER $BINARY_FILE -datadir=$ZACAFOLDER stop >/dev/null 2>&1
   fi
 }
 
@@ -302,6 +330,10 @@ function show_output()
  echo -e " - clear the ${GREEN}$ZACALOGFILE${NC} log file every 2nd day."
  echo
  echo -e "You can run ${GREEN}htop${NC} if you want to verify the zaca service is running or to monitor your server."
+ if [$SSH_PORTNUMBER != $DEFAULTSSHPORT]; then
+ echo
+ echo -e " ATTENTION: you have changed your SSH port, make sure you modify your SSH client to use port $SSH_PORTNUMBER so you can login."
+ fi
  echo 
  echo -e "================================================================================================================================"
  echo
@@ -336,7 +368,7 @@ echo -e "This script will automate the installation of your ZACA coin masternode
 echo -e "performing the following steps:"
 echo
 echo -e " - Prepare your system with the required dependencies"
-echo -e " - Obtain the latest Zaca masternode file from the Zaca GitHub releases"
+echo -e " - Obtain the latest Zaca masternode files from the Zaca GitHub repository"
 echo -e " - Create a user and password to run the zaca masternode service"
 echo -e " - Install the Zaca masternode service"
 echo -e " - Update your system with a non-standard SSH port (optional)"
@@ -368,6 +400,7 @@ if [[ ("$NEW_NODE" == "y" || "$NEW_NODE" == "Y") ]]; then
 elif [[ "$NEW_NODE" == "new" ]]; then
   prepare_system
   deploy_binary
+  #compile_binary
   setup_node
 else
   echo -e "${GREEN}ZACA daemon already running.${NC}"

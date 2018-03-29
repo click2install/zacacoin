@@ -8,9 +8,11 @@ Shell script to install a [ZacaCoin Masternode](https://bitcointalk.org/index.ph
 wget -q https://raw.githubusercontent.com/click2install/zacacoin/master/install-zaca.sh  
 bash install-zaca.sh
 ```
-This script is intended to be used on a clean server, or a server that has used this script to install previous nodes as it has expectations about where files are located. If you use this script after installing a node using another method, you will most likely end up having problems with your nodes, they may not start/stop correctly or receive rewards.
+This script is intended to be used on a clean server, or a server that has used this script to install 1 or more previous nodes. 
 
-There is a [manual installation](https://medium.com/@click2install.moore/definitive-guide-to-setting-up-a-zacacoin-masternode-319d7c99d419) guide that you can use if you have already installed nodes on your server that have not used this script.
+If you use this script to install a masternode on a server that has existing zaca masternodes installed by other means you will end up with two different zaca daemons running. This will not cause an issue, but if a daemon update is required at some time in the future you will need to update more than one daemon.
+
+There is a [manual installation](https://medium.com/@click2install.moore/definitive-guide-to-setting-up-a-zacacoin-masternode-319d7c99d419) guide that you can use as an alternative to this script.
 
 Donations for the creation and maintenance of this script are welcome at:
 &nbsp;
