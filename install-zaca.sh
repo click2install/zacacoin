@@ -380,7 +380,7 @@ echo -e "The script will output ${YELLOW}questions${NC}, ${GREEN}information${NC
 echo -e "When finished the script will show a summary of what has been done."
 echo
 echo -e "Script created by click2install"
-echo -e " - GitHub: https://github.com/click2install"
+echo -e " - GitHub: https://github.com/click2install/zacacoin"
 echo -e " - Discord: click2install#9625"
 echo -e " - ZACA: ZtugezqGy4mVZpTU4tPBjKY4t7YwDyuDA2"
 echo 
