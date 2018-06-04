@@ -30,7 +30,7 @@ The script assumes you are running a cold wallet on your local PC and this scrip
 
 You are now ready to configure your local wallet and finish the masternode setup
 
- 1. Make sure you have downloaded the latest wallet from https://github.com/zacacoin/zacacoin/releases
+ 1. Make sure you have downloaded the latest wallet from https://github.com/devzaca/zacacoin/releases
  2. Install the wallet on your local PC
  3. Start the wallet and let if completely synchronize to the network - this will take some time
  4. Make sure you have at least 7500.00004 ZACA in your wallet

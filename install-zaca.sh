@@ -7,8 +7,8 @@ DEFAULTPORT=48882
 DEFAULTSSHPORT=22
 BINARY_NAME="zacad"
 BINARY_FILE="/usr/local/bin/$BINARY_NAME"
-ZACA_DAEMON_ZIP="https://github.com/zacacoin/zacacoin/raw/2.0.0.1/src/zacad.zip"
-GITHUB_REPO="https://github.com/zacacoin/zacacoin"
+ZACA_DAEMON_ZIP="https://github.com/devzaca/zacacoin/releases/download/2.0.0.1/zacacoin_2.0.0.1_Release_Linux.zip"
+GITHUB_REPO="https://github.com/devzaca/zacacoin"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
