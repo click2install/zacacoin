@@ -99,7 +99,7 @@ function deploy_binary()
     wget $ZACA_DAEMON_ZIP -O zaca.zip >/dev/null 2>&1
 
     unzip zaca.zip -d . >/dev/null 2>&1
-    cp $BINARY_NAME /usr/local/bin/ >/dev/null 2>&1
+    cp src/$BINARY_NAME /usr/local/bin/ >/dev/null 2>&1
     chmod +x $BINARY_FILE >/dev/null 2>&1
 
     cd
