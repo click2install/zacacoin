@@ -39,7 +39,7 @@ You are now ready to configure your local wallet and finish the masternode setup
  7. In the console type: `sendtoaddress [output from #6] 1000`
  8. Wait for the transaction from #7 to be fully confirmed. Look for a tick in the first column in your transactions tab
  9. Once confirmed, type in your console: `masternode outputs`
- 10. Open your masternode configuration file which will be located in your data directory. You can access it by entering `%appdata%\zaca` into your Windows, Start > Run dialog
+ 10. Open your masternode configuration file which will be located in your data directory which can be accessed by entering `%appdata%\zaca` into your Windows, Start > Run dialog
  11. In your masternodes.conf file add an entry that looks like: `[address-name from #6] [ip:port of your VPS] [privkey from script output] output index [txid from from #9] [output index from #9]` - 
  12. Your masternodes.conf file entry should look like: `MN-1 127.0.0.2:48882 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0`
  13. Save and close your masternodes.conf file
