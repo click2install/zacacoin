@@ -25,7 +25,7 @@ ZACA: ZtugezqGy4mVZpTU4tPBjKY4t7YwDyuDA2
 The script assumes you are running a cold wallet on your local PC and this script will execute on a Ubuntu Linux VPS (server). The steps involved are:
 
  1. Run this script as the instructions detail below
- 2. When you are finished this process you will get some infomration on what has been done as well as some important information you will need for your cold wallet setup
+ 2. When you are finished this process you will get some information on what has been done as well as some important information you will need for your cold wallet setup
  3. Copy/paste the output of this script into a text file and keep it safe.
 
 You are now ready to configure your local wallet and finish the masternode setup
